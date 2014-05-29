@@ -1,6 +1,8 @@
 import HTMLParser
 import basesixtyfour
 import re
+import os
+
 def allin1(template, out):
     class Parser(HTMLParser.HTMLParser):
         def __init__(self):
@@ -21,6 +23,8 @@ def allin1(template, out):
     p.feed(html)
     for key, value in p.icons.iteritems():
         html = html.replace('src="'+key+'"', 'src="data:image/x-icon;base64,'+value+'"')
+    if os.path.isfile(out):
+        os.remove(out)
     with open(out, 'wb') as index:
         index.write(html)
         index.close()
